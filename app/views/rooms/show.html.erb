@@ -10,63 +10,63 @@
   <div class="col">
     <div class="chat" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
       <% @room_messages.each do |room_message| %>
-        <div class="chat-message-container">
-          <div class="row no-gutters">
-            <div class="col-auto text-center">
-              <img src="<%= room_message.user.gravatar_url %>" class="avatar" alt="">
-            </div>
+      <div class="chat-message-container">
+        <div class="row no-gutters">
+          <div class="col-auto text-center">
+            <img src="<%= room_message.user.gravatar_url %>" class="avatar" alt="">
+          </div>
 
-            <div class="col">
-              <div class="message-content">
-                <p class="mb-1">
-                  <%= room_message.message.truncate(84) %>
-                </p>
+          <div class="col">
+            <div class="message-content">
+              <p class="mb-1 cripton">
+                <%= room_message.message.truncate(84) %>
+              </p>
 
-                <div class="text-right">
-                  <small>
-                    <%= room_message.created_at.strftime("%H:%M:%S - %d/%m/%Y") %>
-                  </small>
-                </div>
+              <div class="text-right">
+                <small>
+                  <%= room_message.created_at.strftime("%H:%M:%S - %d/%m/%Y") %>
+                </small>
               </div>
             </div>
           </div>
         </div>
+      </div>
       <% end %>
     </div>
 
     <%= simple_form_for @room_message, remote: true do |form| %>
-      <div class="input-group mb-3">
-        <%= form.input :message, as: :string,
+    <div class="input-group mb-3">
+      <%= form.input :message, as: :string,
                                  wrapper: false,
                                  label: false,
                                  input_html: {
                                    class: 'chat-input'
                                  } %>
-        <div class="input-group-append">
-          <%= form.submit "Enviar", class: 'btn btn-primary chat-input' %>
-        </div>
+      <div class="input-group-append">
+        <%= form.submit "Enviar", class: 'btn btn-primary chat-input' %>
       </div>
+    </div>
 
-      <%= form.input :room_id, as: :hidden %>
+    <%= form.input :room_id, as: :hidden %>
     <% end %>
   </div>
   <div class="d-none" data-role="message-template">
     <div class="chat-message-container">
-        <div class="row no-gutters">
+      <div class="row no-gutters">
         <div class="col-auto text-center">
-            <img src="" class="avatar" alt="" data-role="user-avatar">
+          <img src="" class="avatar" alt="" data-role="user-avatar">
         </div>
 
         <div class="col">
-            <div class="message-content">
+          <div class="message-content">
             <p class="mb-1" data-role="message-text"></p>
 
             <div class="text-right">
-                <small data-role="message-date"></small>
+              <small data-role="message-date"></small>
             </div>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </div>

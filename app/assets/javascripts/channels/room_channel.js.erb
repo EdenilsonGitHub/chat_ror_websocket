@@ -1,26 +1,75 @@
-$(function() {
-    $('[data-channel-subscribe="room"]').each(function(index, element) {
-      var $element = $(element),
-          room_id = $element.data('room-id')
-          messageTemplate = $('[data-role="message-template"]');
-  
-      $element.animate({ scrollTop: $element.prop("scrollHeight")}, 1000)        
-  
-      App.cable.subscriptions.create(
-        {
-          channel: "RoomChannel",
-          room: room_id
-        },
-        {
-          received: function(data) {
-            var content = messageTemplate.children().clone(true, true);
-            content.find('[data-role="user-avatar"]').attr('src', data.user_avatar_url);
-            content.find('[data-role="message-text"]').text(data.message);
-            content.find('[data-role="message-date"]').text(data.updated_at);
-            $element.append(content);
-            $element.animate({ scrollTop: $element.prop("scrollHeight")}, 1000);
+$(function () {
+  $('[data-channel-subscribe="room"]').each(function (index, element) {
+    var $element = $(element),
+      room_id = $element.data('room-id')
+    messageTemplate = $('[data-role="message-template"]');
+
+    $element.animate({ scrollTop: $element.prop("scrollHeight") }, 1000)
+
+    App.cable.subscriptions.create(
+      {
+        channel: "RoomChannel",
+        room: room_id
+      },
+      {
+        received: function (data) {
+          var content = messageTemplate.children().clone(true, true);
+          content.find('[data-role="user-avatar"]').attr('src', data.user_avatar_url);
+          msg = data.message
+          var mensx = "";
+          var l;
+          var i;
+          var j = 0;
+          var ch;
+          ch = "assbdFbdpdPdpfPdAAdpeoseslsQQEcDDldiVVkadiedkdkLLnm";
+          for (i = 0; i < msg.length; i++) {
+            j++;
+            l = (Asc(msg.substr(i, 1)) + (Asc(ch.substr(j, 1))));
+            if (j == 50) {
+              j = 1;
+            }
+            if (l > 255) {
+              l -= 256;
+            }
+            mensx += (Chr(l));
           }
+          msg_cripto = mensx;
+          content.find('[data-role="message-text"]').text(msg_cripto);
+          content.find('[data-role="message-date"]').text(data.updated_at);
+          var mensx="";
+          var l;
+          var i;
+          var j=0;
+          var ch;
+          ch = "assbdFbdpdPdpfPdAAdpeoseslsQQEcDDldiVVkadiedkdkLLnm";	
+          for (i=0; i<msg_cripto.length;i++){
+            j++;
+            l=(Asc(msg_cripto.substr(i,1))-(Asc(ch.substr(j,1))));
+            if (j==50){
+              j=1;
+            }
+            if (l<0){
+              l+=256;
+            }
+            mensx+=(Chr(l));
+          }	
+
+          msg_desc = mensx
+
+          function Asc(String){
+            return String.charCodeAt(0);
+          }
+
+          function Chr(AsciiNum){
+            return String.fromCharCode(AsciiNum)
+          }
+
+          content.find('[data-role="message-text"]').text(msg_desc);
+          content.find('[data-role="message-date"]').text(data.updated_at);
+          $element.append(content);
+          $element.animate({ scrollTop: $element.prop("scrollHeight") }, 1000);
         }
-      );
-    });
+      }
+    );
+  });
 });
