@@ -19,12 +19,12 @@
             <div class="col">
               <div class="message-content">
                 <p class="mb-1">
-                  <%= room_message.message %>
+                  <%= room_message.message.truncate(84) %>
                 </p>
 
                 <div class="text-right">
                   <small>
-                    <%= room_message.created_at %>
+                    <%= room_message.created_at.strftime("%H:%M:%S - %d/%m/%Y") %>
                   </small>
                 </div>
               </div>
@@ -43,7 +43,7 @@
                                    class: 'chat-input'
                                  } %>
         <div class="input-group-append">
-          <%= form.submit "Send", class: 'btn btn-primary chat-input' %>
+          <%= form.submit "Enviar", class: 'btn btn-primary chat-input' %>
         </div>
       </div>
 
@@ -68,5 +68,5 @@
         </div>
         </div>
     </div>
-    </div>
+  </div>
 </div>
